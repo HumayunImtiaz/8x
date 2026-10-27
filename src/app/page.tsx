@@ -11,11 +11,18 @@ import {
 import {
   ArtworkCard,
   HeroBackdrop,
+  HeroCopyMotion,
   ParallaxArtwork,
   Reveal,
 } from "@/components/landing-motion";
 
-const featuredArtwork = [
+const featuredArtwork: {
+  src: string;
+  alt: string;
+  title: string;
+  category: string;
+  videoSrc?: string;
+}[] = [
   {
     src: "/assets/Alien Ocean Planet.png",
     alt: "Violet crystal islands surrounding a glowing ring above an alien ocean",
@@ -34,6 +41,70 @@ const featuredArtwork = [
     title: "Midnight Circuit",
     category: "Curated sample · Motion study",
   },
+  {
+    src: "/assets/Cinematic 3D Artwork.png",
+    alt: "A cinematic 3D artwork from the sample collection",
+    title: "A World Reimagined",
+    category: "Curated sample · Cinematic",
+  },
+  {
+    src: "/assets/Futuristic Hypercar Scene.png",
+    alt: "A futuristic hypercar in a cinematic setting",
+    title: "Velocity in Violet",
+    category: "Curated sample · Sci-Fi",
+  },
+  {
+    src: "/assets/Export_1_31b7bc3f24.webp",
+    alt: "A luminous composition from the sample collection",
+    title: "Luminous Study",
+    category: "Curated sample · Artwork",
+  },
+  {
+    src: "/assets/signup.jpg",
+    alt: "A vivid portrait from the sample collection",
+    title: "Electric Reverie",
+    category: "Curated sample · Portrait",
+  },
+  {
+    src: "/assets/video-poster.webp_2K_20261026192221.jpg",
+    alt: "A cinematic light study from the sample collection",
+    title: "Light Between Worlds",
+    category: "Curated sample · Light study",
+  },
+  {
+    src: "/assets/images.jfif",
+    alt: "A colorful visual study from the sample collection",
+    title: "Color in Motion",
+    category: "Curated sample · Visual study",
+  },
+  {
+    src: "/assets/imagess.avif",
+    alt: "An atmospheric scene from the sample collection",
+    title: "Dreamlike Horizons",
+    category: "Curated sample · Environment",
+  },
+  {
+    src: "/assets/heroimage.jpg",
+    alt: "A creative workstation imagined as a portal to new worlds",
+    title: "The Artist’s Portal",
+    category: "Curated sample · Studio",
+  },
+  ...([
+    ["Hero.mp4", "Create Beyond Reality", "A cinematic neon world in motion"],
+    ["candle.mp4", "Candlelight", "A candlelit cinematic motion study"],
+    ["horse.mp4", "Into the Open", "A horse moving through an expansive landscape"],
+    ["illustration-bike.mp4", "City Ride", "An illustrated bicycle ride through a city"],
+    ["porsche.mp4", "Midnight Drive", "A sports car moving through a night scene"],
+    ["rain-city.mp4", "Rain City", "A rain-swept city at night"],
+    ["video.mp4", "Visual Study", "A cinematic visual study in motion"],
+    ["videoo.mp4", "Light in Motion", "A luminous scene in motion"],
+  ] as const).map(([filename, title, alt]) => ({
+    src: "/assets/video-poster.webp_2K_20261026192221.jpg",
+    videoSrc: `/assets/${filename}`,
+    alt,
+    title,
+    category: "Curated sample · Video",
+  })),
 ];
 
 const creativeDirections = [
@@ -43,7 +114,7 @@ const creativeDirections = [
     title: "Image Studio",
     description:
       "A focused space for shaping a visual idea, with room for prompts and creative direction.",
-    href: "/create/image",
+    href: "/generate/image",
   },
   {
     icon: Clapperboard,
@@ -51,7 +122,7 @@ const creativeDirections = [
     title: "Video Studio",
     description:
       "A cinematic workspace concept for developing scenes, atmosphere, and motion.",
-    href: "/create/video",
+    href: "/generate/video",
   },
   {
     icon: Compass,
@@ -75,35 +146,37 @@ export default function HomePage() {
         <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[1fr_0.95fr] lg:gap-14 lg:px-10 lg:py-28">
           <div className="relative z-10 max-w-2xl">
             <Reveal>
-              <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFD91A]/25 bg-[#0B0D19]/55 px-3.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#FFE84A] backdrop-blur-sm sm:text-xs">
-                <Sparkles aria-hidden="true" className="size-3.5" />
-                A new frame of imagination
-              </p>
-              <h1
-                className="max-w-[12ch] text-[clamp(3.5rem,9vw,7.3rem)] font-semibold leading-[0.91] tracking-[-0.065em] text-[#F8F7FF]"
-                id="hero-title"
-              >
-                Create
-                <br />
-                Beyond
-                <br />
-                <span className="hero-title-accent">Reality.</span>
-              </h1>
-              <p className="mt-7 max-w-lg text-base leading-7 text-[#D0D0DE] sm:text-lg sm:leading-8">
-                Step into a cinematic creative space where bold ideas find
-                their visual direction.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 min-[420px]:flex-row">
-                <Link className="button-primary" href="/signup">
-                  Enter the studio <ArrowRight aria-hidden="true" />
-                </Link>
-                <Link className="button-secondary" href="/explore">
-                  Explore the worlds
-                </Link>
-              </div>
-              <p className="mt-5 text-xs text-[#A7A9BD]">
-                Studio preview · AI generation is not connected yet
-              </p>
+              <HeroCopyMotion>
+                <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFD91A]/25 bg-[#0B0D19]/55 px-3.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#FFE84A] backdrop-blur-sm sm:text-xs">
+                  <Sparkles aria-hidden="true" className="size-3.5" />
+                  A new frame of imagination
+                </p>
+                <h1
+                  className="hero-copy-title max-w-[12ch] text-[clamp(3.5rem,9vw,7.3rem)] font-semibold leading-[0.91] tracking-[-0.065em] text-[#F8F7FF]"
+                  id="hero-title"
+                >
+                  Create
+                  <br />
+                  Beyond
+                  <br />
+                  <span className="hero-title-accent">Reality.</span>
+                </h1>
+                <p className="hero-copy-description mt-7 max-w-lg text-base leading-7 text-[#D0D0DE] sm:text-lg sm:leading-8">
+                  Step into a cinematic creative space where bold ideas find
+                  their visual direction.
+                </p>
+                <div className="hero-copy-actions mt-9 flex flex-col gap-3 min-[420px]:flex-row">
+                  <Link className="button-primary" href="/signup">
+                    Enter the studio <ArrowRight aria-hidden="true" />
+                  </Link>
+                  <Link className="button-secondary" href="/explore">
+                    Explore the worlds
+                  </Link>
+                </div>
+                <p className="mt-5 text-xs text-[#A7A9BD]">
+                  Studio preview · AI generation is not connected yet
+                </p>
+              </HeroCopyMotion>
             </Reveal>
           </div>
 
@@ -145,13 +218,13 @@ export default function HomePage() {
                 category="Featured sample · Energy architecture"
                 className="aspect-[16/10] sm:aspect-[16/9] xl:aspect-[1.48]"
                 href="/explore"
-                src="/assets/Futuristic_structure_with_energy%E2%80%A6_2K_20261026191840.jpg"
+                src="/assets/Futuristic Monument Art.png"
                 title="The architecture of possibility"
                 wide
               />
             </Reveal>
             {featuredArtwork.map((artwork, index) => (
-              <Reveal delay={index * 0.08} key={artwork.src}>
+              <Reveal delay={index * 0.08} key={artwork.videoSrc ?? artwork.src}>
                 <ArtworkCard
                   alt={artwork.alt}
                   category={artwork.category}
@@ -159,6 +232,7 @@ export default function HomePage() {
                   href="/explore"
                   src={artwork.src}
                   title={artwork.title}
+                  videoSrc={artwork.videoSrc}
                 />
               </Reveal>
             ))}
@@ -240,7 +314,7 @@ export default function HomePage() {
               className="object-cover object-center opacity-35"
               fill
               sizes="(max-width: 1280px) 92vw, 1280px"
-              src="/assets/Futuristic_structure_with_energy%E2%80%A6_2K_20261026191840.jpg"
+              src="/assets/Futuristic Monument Art.png"
             />
           </div>
           <div

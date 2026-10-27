@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { AuthenticationPage } from "@/components/auth-pages";
 
 export default function SignupPage() {
-  return (
-    <PagePlaceholder
-      description="Create an account to begin your creative journey."
-      title="Create your account"
-    />
-  );
+  return <AuthenticationPage mode="signup" />;
 }

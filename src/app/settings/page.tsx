@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { SettingsPage } from "@/components/settings-page";
 
-export default function SettingsPage() {
-  return (
-    <PagePlaceholder
-      description="Manage your profile and creative preferences."
-      title="Profile & settings"
-    />
-  );
+export default function SettingsPageRoute() {
+  return <SettingsPage />;
 }

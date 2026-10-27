@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { VideoGenerator } from "@/components/video-generator";
 
 export default function VideoGeneratorPage() {
-  return (
-    <PagePlaceholder
-      description="Build a cinematic concept in the video creation studio."
-      title="Video studio"
-    />
-  );
+  return <VideoGenerator />;
 }

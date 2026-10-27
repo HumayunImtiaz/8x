@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { ExploreGallery } from "@/components/explore-gallery";
 
 export default function ExplorePage() {
-  return (
-    <PagePlaceholder
-      description="Discover public work from the Neon Cinema community."
-      title="Explore the gallery"
-    />
-  );
+  return <ExploreGallery />;
 }

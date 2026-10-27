@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { AuthenticationPage } from "@/components/auth-pages";
 
 export default function LoginPage() {
-  return (
-    <PagePlaceholder
-      description="Sign in to return to your creative studio."
-      title="Welcome back"
-    />
-  );
+  return <AuthenticationPage mode="login" />;
 }

@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { CreationsLibrary } from "@/components/creations-library";
 
 export default function CreationsPage() {
-  return (
-    <PagePlaceholder
-      description="Your private library for saved and generated work."
-      title="My creations"
-    />
-  );
+  return <CreationsLibrary />;
 }

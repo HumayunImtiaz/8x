@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { ImageGenerator } from "@/components/image-generator";
 
 export default function ImageGeneratorPage() {
-  return (
-    <PagePlaceholder
-      description="Shape a visual concept with the image creation studio."
-      title="Image studio"
-    />
-  );
+  return <ImageGenerator />;
 }

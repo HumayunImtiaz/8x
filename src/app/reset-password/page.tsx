@@ -1,10 +1,5 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import { AuthenticationPage } from "@/components/auth-pages";
 
 export default function ResetPasswordPage() {
-  return (
-    <PagePlaceholder
-      description="Request a secure password reset for your account."
-      title="Reset your password"
-    />
-  );
+  return <AuthenticationPage mode="reset" />;
 }
