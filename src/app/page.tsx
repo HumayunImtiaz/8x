@@ -99,7 +99,7 @@ const featuredArtwork: {
     ["video.mp4", "Visual Study", "A cinematic visual study in motion"],
     ["videoo.mp4", "Light in Motion", "A luminous scene in motion"],
   ] as const).map(([filename, title, alt]) => ({
-    src: "/assets/video-poster.webp_2K_20261026192221.jpg",
+    src: "/assets/video-poster-small.webp",
     videoSrc: `/assets/${filename}`,
     alt,
     title,

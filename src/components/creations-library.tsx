@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { LazyVideo } from "@/components/lazy-video";
 import { type LocalCreation, useLocalCreations } from "@/lib/local-creations";
 import { useStudioReducedMotion } from "@/lib/use-studio-reduced-motion";
 
@@ -191,7 +192,7 @@ export function CreationsLibrary() {
                     {item.kind === "image" ? (
                       <Image alt={item.title} fill loading={index === 0 ? "eager" : "lazy"} sizes="(max-width: 640px) 90vw, (max-width: 1000px) 44vw, 29vw" src={assetPath(item.filename)} />
                     ) : (
-                      <video aria-label={`${item.title}, saved sample video`} muted playsInline poster={assetPath("video-poster.webp_2K_20261026192221.jpg")} preload="metadata" src={assetPath(item.filename)} />
+                      <LazyVideo aria-label={`${item.title}, saved sample video`} poster={assetPath("video-poster-small.webp")} src={assetPath(item.filename)} />
                     )}
                     <span className="creations-card-shade" />
                     <span className={`creations-kind-badge ${item.kind}`}><span>{item.kind === "image" ? <ImageIcon aria-hidden="true" /> : <Clapperboard aria-hidden="true" />}{item.kind === "image" ? "IMAGE" : "VIDEO"}</span><strong>SAMPLE</strong></span>
@@ -257,7 +258,7 @@ export function CreationsLibrary() {
               {dialog.item.kind === "image" ? (
                 <Image alt={dialog.item.title} fill priority sizes="(max-width: 900px) 94vw, 78vw" src={assetPath(dialog.item.filename)} />
               ) : (
-                <video aria-label={`${dialog.item.title} sample video playback`} autoPlay controls muted playsInline preload="metadata" src={assetPath(dialog.item.filename)} />
+                <LazyVideo aria-label={`${dialog.item.title} sample video playback`} autoPlay controls poster={assetPath("video-poster-small.webp")} priority src={assetPath(dialog.item.filename)} />
               )}
               <button aria-label="Close preview" className="generator-dialog-close" onClick={() => setDialog(null)} type="button"><X aria-hidden="true" /></button>
               <span className="generator-sample-badge">SAVED SAMPLE · NOT GENERATED</span>

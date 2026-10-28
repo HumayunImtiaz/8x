@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { LazyVideo } from "@/components/lazy-video";
 import { useStudioReducedMotion } from "@/lib/use-studio-reduced-motion";
 
 const filters = ["All", "Images", "Videos", "Sci-Fi", "Fantasy", "Cinematic"] as const;
@@ -363,15 +364,13 @@ function GalleryCard({
             src={assetPath(entry.filename)}
           />
         ) : entry.kind === "Video" ? (
-          <video
+          <LazyVideo
             aria-label={`${entry.title} sample video`}
             autoPlay
             className="explore-art-video"
             loop
-            muted
             onLoadedMetadata={(event) => setDuration(formatDuration(event.currentTarget.duration))}
-            playsInline
-            preload="metadata"
+            poster="/assets/video-poster-small.webp"
             src={assetPath(entry.filename)}
           />
         ) : (
@@ -785,12 +784,11 @@ export function ExploreGallery() {
             </button>
             <div className="explore-preview-media">
               {selectedItem.kind === "Video" ? (
-                <video
+                <LazyVideo
                   autoPlay
                   controls
-                  muted
-                  playsInline
-                  preload="metadata"
+                  poster="/assets/video-poster-small.webp"
+                  priority
                   src={assetPath(selectedItem.filename)}
                 />
               ) : selectedItem.kind === "Image" ? (

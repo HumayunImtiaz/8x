@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { LazyVideo } from "@/components/lazy-video";
 import { useLocalCreations } from "@/lib/local-creations";
 import { readLocalSettings } from "@/lib/local-settings";
 import { useStudioReducedMotion } from "@/lib/use-studio-reduced-motion";
@@ -62,7 +63,7 @@ const inspiration: Inspiration[] = [
     title: "Create Beyond Reality",
     category: "Cinematic · Sample video",
     filename: "Hero.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A cinematic neon world unfolding from darkness, luminous architecture, smooth camera movement, golden highlights",
     ratio: "landscape",
   },
@@ -71,7 +72,7 @@ const inspiration: Inspiration[] = [
     title: "Candlelight",
     category: "Cinematic · Sample video",
     filename: "candle.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A quiet candlelit scene, warm flickering light, intimate cinematic atmosphere",
     ratio: "portrait",
   },
@@ -80,7 +81,7 @@ const inspiration: Inspiration[] = [
     title: "Into the Open",
     category: "Cinematic · Sample video",
     filename: "horse.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A horse moving through an expansive landscape, natural light, cinematic motion",
     ratio: "landscape",
   },
@@ -89,7 +90,7 @@ const inspiration: Inspiration[] = [
     title: "City Ride",
     category: "Cinematic · Sample video",
     filename: "illustration-bike.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "An illustrated bicycle ride through a vivid city, smooth tracking movement",
     ratio: "landscape",
   },
@@ -98,7 +99,7 @@ const inspiration: Inspiration[] = [
     title: "Midnight Drive",
     category: "Cinematic · Sample video",
     filename: "porsche.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A sports car cruising through a cinematic night scene, glowing reflections",
     ratio: "landscape",
   },
@@ -107,7 +108,7 @@ const inspiration: Inspiration[] = [
     title: "Rain City",
     category: "Cinematic · Sample video",
     filename: "rain-city.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A rain-swept city at night, reflections across the street, atmospheric camera movement",
     ratio: "landscape",
   },
@@ -116,7 +117,7 @@ const inspiration: Inspiration[] = [
     title: "Visual Study",
     category: "Cinematic · Sample video",
     filename: "video.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A cinematic visual study with expressive movement, light, and atmosphere",
     ratio: "landscape",
   },
@@ -125,7 +126,7 @@ const inspiration: Inspiration[] = [
     title: "Light in Motion",
     category: "Cinematic · Sample video",
     filename: "videoo.mp4",
-    poster: "video-poster.webp_2K_20261026192221.jpg",
+    poster: "video-poster-small.webp",
     prompt: "A luminous scene in motion, layered color and cinematic light",
     ratio: "landscape",
   },
@@ -184,7 +185,6 @@ export function VideoGenerator() {
   const [preview, setPreview] = useState<Preview>(null);
   const [sampleDuration, setSampleDuration] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const previewVideoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useStudioReducedMotion();
   const { items: savedCreations, save } = useLocalCreations();
 
@@ -404,15 +404,12 @@ export function VideoGenerator() {
                 <div className="generator-inspiration-media">
                   {item.kind === "video" ? (
                     <>
-                      <video
+                      <LazyVideo
                         aria-label="Neon Cinema sample video reel"
                         className="video-card-player"
                         controls
-                        muted
                         onLoadedMetadata={(event) => setSampleDuration(formatDuration(event.currentTarget.duration))}
-                        playsInline
                         poster={assetPath(item.poster)}
-                        preload="metadata"
                         src={assetPath(item.filename)}
                       />
                       <span className="video-asset-label"><Play aria-hidden="true" /> REAL SAMPLE VIDEO{sampleDuration ? ` · ${sampleDuration}` : ""}</span>
@@ -465,24 +462,19 @@ export function VideoGenerator() {
         onCancel={(event) => { event.preventDefault(); setPreview(null); }}
         onClick={(event) => { if (event.target === event.currentTarget) setPreview(null); }}
         onKeyDown={(event) => { if (event.key === "Escape") { event.preventDefault(); setPreview(null); } }}
-        onClose={() => {
-          previewVideoRef.current?.pause();
-          setPreview(null);
-        }}
+        onClose={() => setPreview(null)}
         ref={dialogRef}
       >
         {preview && (
           <div className="generator-dialog-content">
             <div className="generator-dialog-image">
               {preview.kind === "video" ? (
-                <video
+                <LazyVideo
                   aria-label="Neon Cinema sample reel playback"
                   autoPlay
                   controls
-                  muted
-                  playsInline
-                  preload="metadata"
-                  ref={previewVideoRef}
+                  poster={preview.kind === "video" ? assetPath(preview.poster) : undefined}
+                  priority
                   src={assetPath(preview.filename)}
                 />
               ) : (

@@ -16,15 +16,16 @@ import {
   WandSparkles,
 } from "lucide-react";
 import {
-  useEffect,
   useRef,
   useState,
   type PointerEvent,
   type ReactNode,
 } from "react";
+import { LazyVideo } from "@/components/lazy-video";
 import { useStudioReducedMotion } from "@/lib/use-studio-reduced-motion";
 
 const heroArtwork = "/assets/heroimage.jpg";
+const heroPoster = "/assets/hero-poster.webp";
 
 function getNormalizedPointerPosition(
   coordinate: number,
@@ -89,19 +90,6 @@ export function HeroCopyMotion({ children }: Readonly<{ children: ReactNode }>) 
 export function HeroBackdrop() {
   const reducedMotion = usePrefersReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (reducedMotion) {
-      return;
-    }
-
-    const video = videoRef.current;
-
-    if (video) {
-      void video.play().catch(() => setVideoFailed(true));
-    }
-  }, [reducedMotion]);
 
   if (reducedMotion && !videoFailed) {
     return (
@@ -123,19 +111,14 @@ export function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="absolute inset-0 -z-20 overflow-hidden">
       {!reducedMotion && !videoFailed ? (
-        <video
+        <LazyVideo
           autoPlay
           className="hero-video absolute inset-0 size-full object-cover"
           loop
-          muted
           onError={() => setVideoFailed(true)}
-          playsInline
-          poster={heroArtwork}
-          preload="metadata"
-          ref={videoRef}
-        >
-          <source src="/assets/Hero.mp4" type="video/mp4" />
-        </video>
+          poster={heroPoster}
+          src="/assets/Hero.mp4"
+        />
       ) : (
         <Image
           alt=""
@@ -622,15 +605,12 @@ export function ArtworkCard({
         href={href}
       >
         {videoSrc ? (
-          <video
+          <LazyVideo
             aria-label={alt}
             autoPlay
             className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
             loop
-            muted
-            playsInline
-            poster={poster ?? src}
-            preload="metadata"
+            poster={poster ?? "/assets/video-poster-small.webp"}
             src={videoSrc}
           />
         ) : (
